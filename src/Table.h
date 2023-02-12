@@ -24,4 +24,10 @@ public:
 
     virtual void PrintList() = 0;
     inline virtual void PrintRecordsNumber() = 0;
+
+private:
+    inline virtual int GetRecordId() = 0;
+    inline virtual int GoBack() = 0;
+    virtual void DeleteRecordFromFile(int record_id) = 0;
+    virtual void ReplaceRecordInFile(int record_id, std::string to_update) = 0;
 };

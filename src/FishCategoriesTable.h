@@ -1,6 +1,6 @@
 #pragma once
 #include "Table.h"
-#include <vector>
+#include <map>
 
 
 class FishCategoriesTable : public Table {
@@ -15,12 +15,18 @@ public:
     virtual void PrintList() override;
     inline virtual void PrintRecordsNumber() override { std::cout << "Number of records: " << m_FishCategories.size() << std::endl; }
 
-    inline std::vector<FishCategories*> GetFishCategories() { return m_FishCategories; }
+    inline std::map<int, FishCategories*> GetFishCategories() { return m_FishCategories; }
 
 private:
-    inline int GetRecordId();
+    inline virtual int GetRecordId() override;
+    inline virtual int GoBack() override;
+    virtual void DeleteRecordFromFile(int record_id) override;
+    virtual void ReplaceRecordInFile(int record_id, std::string to_update) override;
+
+private:
+    void ClearDependencies(int record_id);
 
 private:
     uint32_t id;
-    std::vector<FishCategories*> m_FishCategories;
+    std::map<int, FishCategories*> m_FishCategories;
 };

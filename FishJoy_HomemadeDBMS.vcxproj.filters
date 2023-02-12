@@ -24,7 +24,7 @@
     <ClCompile Include="src\Menu.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="src\FishCategoryTable.cpp">
+    <ClCompile Include="src\FishCategoriesTable.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
@@ -38,7 +38,7 @@
     <ClInclude Include="src\Table.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="src\FishCategoryTable.h">
+    <ClInclude Include="src\FishCategoriesTable.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

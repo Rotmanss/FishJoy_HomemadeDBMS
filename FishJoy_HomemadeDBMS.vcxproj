@@ -140,12 +140,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Application.cpp" />
-    <ClCompile Include="src\FishCategoryTable.cpp" />
+    <ClCompile Include="src\FishCategoriesTable.cpp" />
     <ClCompile Include="src\FishTable.cpp" />
     <ClCompile Include="src\Menu.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\FishCategoryTable.h" />
+    <ClInclude Include="src\FishCategoriesTable.h" />
     <ClInclude Include="src\FishTable.h" />
     <ClInclude Include="src\Menu.h" />
     <ClInclude Include="src\Table.h" />
