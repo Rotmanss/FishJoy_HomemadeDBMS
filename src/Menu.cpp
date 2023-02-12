@@ -24,8 +24,6 @@ void Menu::ShowMenu(int& choice)
 	std::cout << "\n";
 }
 
-
-
 void Menu::DoAction()
 {
 	while (is_running)
