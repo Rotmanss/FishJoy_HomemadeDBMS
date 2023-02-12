@@ -15,4 +15,8 @@ public:
 private:
 	Table* m_CategoryTable;
 	Table* m_FishTable;
+
+private:
+	bool is_running;
+	int choice;
 };

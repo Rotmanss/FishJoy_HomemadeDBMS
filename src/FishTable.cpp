@@ -210,6 +210,5 @@ void FishTable::PrintList()
     std::cout << "FISH:\n";
     std::cout << "id\t\t\t\tname\t\t\t\taverage_weight\t\t\tcategory_id\n";
     for (auto el : m_Fish)
-        if (el.second->fish_category_id != nullptr)
-            std::cout << el.second->id << "\t\t\t\t" << el.second->name << "\t\t\t\t\t" << el.second->average_weight << "\t\t\t" << el.second->fish_category_id->id << "\n";
+        std::cout << el.second->id << "\t\t\t\t" << el.second->name << "\t\t\t\t\t" << el.second->average_weight << "\t\t\t" << el.second->fish_category_id->id << "\n";
 }

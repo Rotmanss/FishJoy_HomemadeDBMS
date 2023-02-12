@@ -1,1 +1,2 @@
-5	lake
+1	river
+2	lake

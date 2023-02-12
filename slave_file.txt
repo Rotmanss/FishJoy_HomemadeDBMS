@@ -1,1 +1,3 @@
-2	pike	44	5
+1	carp	3.5	1
+2	pike	44	2
+3	ggg	55	1

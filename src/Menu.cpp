@@ -2,6 +2,7 @@
 #include <iostream>
 
 Menu::Menu()
+	: choice(0), is_running(true)
 {
 	m_CategoryTable = new FishCategoriesTable();
 	m_FishTable = new FishTable((FishCategoriesTable*)m_CategoryTable);
@@ -27,9 +28,6 @@ void Menu::ShowMenu(int& choice)
 
 void Menu::DoAction()
 {
-	bool is_running = true;
-	int choice = 0;
-
 	while (is_running)
 	{
 		if (choice == 0)
