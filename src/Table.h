@@ -6,6 +6,8 @@
 struct FishCategories {
     uint32_t id;
     std::string name;
+
+    bool is_published = true;
 };
 
 struct Fish {
@@ -13,6 +15,8 @@ struct Fish {
     std::string name;
     float average_weight;
     FishCategories* fish_category_id;
+
+    bool is_published = true;
 };
 
 class Table

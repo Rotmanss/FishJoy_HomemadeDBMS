@@ -27,6 +27,9 @@
     <ClCompile Include="src\FishCategoriesTable.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="src\GarbageCollector.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\FishTable.h">
@@ -39,6 +42,9 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="src\FishCategoriesTable.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GarbageCollector.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

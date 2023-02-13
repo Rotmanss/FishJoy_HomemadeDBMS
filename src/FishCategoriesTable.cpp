@@ -4,6 +4,12 @@
 #include <vector>
 
 
+std::ostream& operator<<(std::ostream& os, const FishCategories* category) {
+    os << "id: " << category->id << ", name: " << category->name << ", is_published: " <<
+        std::boolalpha << category->is_published << " (Fish Categories)";
+    return os;
+}
+
 inline int FishCategoriesTable::GetRecordId()
 {
     int record_id;
@@ -32,8 +38,9 @@ void FishCategoriesTable::ClearDependencies(int record_id)
         {
             int pos = dependencies_line.rfind('\t');
             std::string value = dependencies_line.substr(pos + 1);
-            if (value != std::to_string(record_id))
-                dependencies_lines.push_back(dependencies_line);
+            if (value == std::to_string(record_id))
+                dependencies_line[0] = '0';
+            dependencies_lines.push_back(dependencies_line);
         }
     }
     dependencies_file.close();
@@ -51,7 +58,7 @@ void FishCategoriesTable::ClearDependencies(int record_id)
 void FishCategoriesTable::DeleteRecordFromFile(int record_id)
 {
     std::stringstream ss;
-    ss << m_FishCategories[record_id]->id << "\t" << m_FishCategories[record_id]->name;
+    ss << "1\t" << m_FishCategories[record_id]->id << "\t" << m_FishCategories[record_id]->name;
     std::string to_remove = ss.str();
 
     std::vector<std::string> lines;
@@ -62,8 +69,9 @@ void FishCategoriesTable::DeleteRecordFromFile(int record_id)
     {
         while (std::getline(file, line))
         {
-            if (line != to_remove)
-                lines.push_back(line);
+            if (line == to_remove)
+                line[0] = '0';
+            lines.push_back(line);
         }
     }
     file.close();
@@ -83,7 +91,7 @@ void FishCategoriesTable::DeleteRecordFromFile(int record_id)
 void FishCategoriesTable::ReplaceRecordInFile(int record_id, std::string to_update)
 {
     std::stringstream ss;
-    ss << m_FishCategories[record_id]->id << "\t" << m_FishCategories[record_id]->name;
+    ss << "1\t" << m_FishCategories[record_id]->id << "\t" << m_FishCategories[record_id]->name;
     std::string updated = ss.str();
 
     std::vector<std::string> lines;
@@ -114,21 +122,26 @@ void FishCategoriesTable::ReplaceRecordInFile(int record_id, std::string to_upda
 }
 
 
-FishCategoriesTable::FishCategoriesTable()
-    : id(0)
+FishCategoriesTable::FishCategoriesTable(GarbageCollector* garbage)
+    : id(0), m_Garbage(garbage)
 {
     uint32_t pk;
     char name[50];
+
+    bool is_published;
     
     std::fstream file;
     file.open("master_file.txt", std::ios::in);
     if (file.is_open())
     {
-        while (file >> pk >> name)
+        while (file >> is_published >> pk >> name)
         {
-            FishCategories* cat = new FishCategories{ pk, name };
-            m_FishCategories[pk] = cat;
-            id = pk;
+            if (is_published)
+            {
+                FishCategories* cat = new FishCategories{ pk, name };
+                m_FishCategories[pk] = cat;
+                id = pk;
+            }
         }
     }
 }
@@ -155,7 +168,7 @@ void FishCategoriesTable::AddRecord()
     file.open("master_file.txt", std::ios::app);
     if (file.is_open())
     {
-        file << cat->id << "\t" << cat->name << "\n";
+        file << "1\t" << cat->id << "\t" << cat->name << "\n";
         file.close();
     }
 }
@@ -174,8 +187,10 @@ void FishCategoriesTable::RemoveRecord()
     }
 
     DeleteRecordFromFile(record_id);
-    delete m_FishCategories[record_id];
-    m_FishCategories.erase(record_id);
+    m_FishCategories[record_id]->is_published = false;
+    std::stringstream ss;
+    ss << m_FishCategories[record_id];
+    m_Garbage->AddToGarbage(ss.str());
 }
 
 void FishCategoriesTable::UpdateRecord()
@@ -197,7 +212,7 @@ void FishCategoriesTable::UpdateRecord()
     }
 
     std::stringstream ss;
-    ss << m_FishCategories[record_id]->id << "\t" << m_FishCategories[record_id]->name;
+    ss << "1\t" << m_FishCategories[record_id]->id << "\t" << m_FishCategories[record_id]->name;
     std::string to_update = ss.str();
 
     m_FishCategories[record_id]->name = name;
@@ -207,7 +222,43 @@ void FishCategoriesTable::UpdateRecord()
 void FishCategoriesTable::PrintList()
 {
     std::cout << "FISH CATEGORIES:\n";
-    std::cout << "id\t\t\t\tname\n";
-    for (auto el : m_FishCategories)
-        std::cout << el.second->id << "\t\t\t\t" << el.second->name << "\n";
+    std::cout << "id\t\t\tname\n";
+
+    std::string line;
+    std::fstream file;
+    file.open("master_file.txt", std::ios::in);
+    if (file.is_open())
+    {
+        while (std::getline(file, line))
+        {
+            bool is_published = std::stoi(line.substr(0, 1));
+
+            if (is_published)
+            {
+                std::string item;
+                line = line.substr(2);
+                std::stringstream ss(line);
+                while (std::getline(ss, item, '\t'))
+                    std::cout << item + "\t\t\t";
+                std::cout << "\n";
+            }
+        }
+    }
+    file.close();
+}
+
+inline void FishCategoriesTable::PrintRecordsNumber()
+{
+    std::string line;
+    std::fstream file;
+    file.open("master_file.txt", std::ios::in);
+    int count = 0;
+
+    while (std::getline(file, line)) {
+        if (line[0] == '1') {
+            count++;
+        }
+    }
+
+    std::cout << "Number of categories records: " << count << std::endl;
 }

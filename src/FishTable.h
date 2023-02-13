@@ -1,12 +1,13 @@
 #pragma once
 #include "Table.h"
 #include "FishCategoriesTable.h"
+#include "GarbageCollector.h"
 #include <map>
 
 
 class FishTable : public Table {
 public:
-    FishTable(FishCategoriesTable* categories);
+    FishTable(FishCategoriesTable* categories, GarbageCollector* garbage);
     ~FishTable();
 
     virtual void AddRecord() override;
@@ -14,7 +15,7 @@ public:
     virtual void UpdateRecord() override;
 
     virtual void PrintList() override;
-    inline virtual void PrintRecordsNumber() override { std::cout << "Number of records: " << m_Fish.size() << std::endl; }
+    inline virtual void PrintRecordsNumber() override;
 
     inline std::map<int, Fish*> GetFish() { return m_Fish; }
 
@@ -28,4 +29,5 @@ private:
     uint32_t id;
     std::map<int, Fish*> m_Fish;
     FishCategoriesTable* m_Categories;
+    GarbageCollector* m_Garbage;
 };

@@ -4,12 +4,14 @@
 Menu::Menu()
 	: choice(0), is_running(true)
 {
-	m_CategoryTable = new FishCategoriesTable();
-	m_FishTable = new FishTable((FishCategoriesTable*)m_CategoryTable);
+	m_Garbage = new GarbageCollector();
+	m_CategoryTable = new FishCategoriesTable(m_Garbage);
+	m_FishTable = new FishTable((FishCategoriesTable*)m_CategoryTable, m_Garbage);
 }
 
 Menu::~Menu()
 {
+	delete m_Garbage;
 	delete m_CategoryTable;
 	delete m_FishTable;
 }
@@ -19,7 +21,7 @@ void Menu::ShowMenu(int& choice)
 	std::cout << "Select an option:\n\n1) See 'Fish list'\n2) See 'Category list'\n3) Add record to 'Fish table'\n" <<
 		"4) Add record to 'Category table'\n5) Remove record from 'Fish table'\n6) Remove record from 'Category table'\n" <<
 		"7) Update record in 'Fish table'\n8) Update record in 'Category table'\n9) Get the number of records of 'Fish table'\n" <<
-		"10) Get the number of records of 'Category table'\n11) Exit\n";
+		"10) Get the number of records of 'Category table'\n11) Print all deleted records\n12) Exit\n";
 	std::cin >> choice;
 	std::cout << "\n";
 }
@@ -74,6 +76,10 @@ void Menu::DoAction()
 			choice = 0;
 			break;
 		case 11:
+			m_Garbage->PrintGarbage();
+			choice = 0;
+			break;
+		case 12:
 			is_running = false;
 			break;
 		default:
