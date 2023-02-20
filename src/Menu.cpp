@@ -21,7 +21,8 @@ void Menu::ShowMenu(int& choice)
 	std::cout << "Select an option:\n\n1) See 'Fish list'\n2) See 'Category list'\n3) Add record to 'Fish table'\n" <<
 		"4) Add record to 'Category table'\n5) Remove record from 'Fish table'\n6) Remove record from 'Category table'\n" <<
 		"7) Update record in 'Fish table'\n8) Update record in 'Category table'\n9) Get the number of records of 'Fish table'\n" <<
-		"10) Get the number of records of 'Category table'\n11) Print all deleted records\n12) Exit\n";
+		"10) Get the number of records of 'Category table'\n11) Print all deleted records\n12) See 'Fish record'\n" <<
+		"13) See 'Category record'\n14) Exit\n";
 	std::cin >> choice;
 	std::cout << "\n";
 }
@@ -80,6 +81,14 @@ void Menu::DoAction()
 			choice = 0;
 			break;
 		case 12:
+			m_FishTable->PrintRecord();
+			choice = 0;
+			break;
+		case 13:
+			m_CategoryTable->PrintRecord();
+			choice = 0;
+			break;
+		case 14:
 			is_running = false;
 			break;
 		default:

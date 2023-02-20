@@ -247,6 +247,24 @@ void FishCategoriesTable::PrintList()
     file.close();
 }
 
+void FishCategoriesTable::PrintRecord()
+{
+    if (GoBack() == 1)
+        return;
+
+    int record_id = GetRecordId();
+    if (m_FishCategories.find(record_id) == m_FishCategories.end())
+    {
+        std::cout << "You don't have category with id: '" << record_id << "'\n";
+        return;
+    }
+
+    std::cout << "FISH CATEGORIES:\n";
+    std::cout << "id\t\t\tname\n";
+    if (m_FishCategories[record_id]->is_published)
+        std::cout << m_FishCategories[record_id]->id << "\t\t\t" << m_FishCategories[record_id]->name << std::endl;
+}
+
 inline void FishCategoriesTable::PrintRecordsNumber()
 {
     std::string line;

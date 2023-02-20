@@ -15,6 +15,7 @@ public:
     virtual void UpdateRecord() override;
 
     virtual void PrintList() override;
+    virtual void PrintRecord() override;
     inline virtual void PrintRecordsNumber() override;
 
     inline std::map<int, Fish*> GetFish() { return m_Fish; }

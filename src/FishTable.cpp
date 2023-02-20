@@ -249,6 +249,25 @@ void FishTable::PrintList()
     file.close();
 }
 
+void FishTable::PrintRecord()
+{
+    if (GoBack() == 1)
+        return;
+
+    int record_id = GetRecordId();
+    if (m_Fish.find(record_id) == m_Fish.end())
+    {
+        std::cout << "You don't have fish with id: '" << record_id << "'\n";
+        return;
+    }
+
+    std::cout << "FISH:\n";
+    std::cout << "id\t\t\tname\t\t\taverage_weight\t\tcategory_id\n";
+    if (m_Fish[record_id]->is_published)
+        std::cout << m_Fish[record_id]->id << "\t\t\t" << m_Fish[record_id]->name << "\t\t\t" << m_Fish[record_id]->average_weight <<
+        "\t\t\t" << m_Fish[record_id]->fish_category_id->id << std::endl;
+}
+
 inline void FishTable::PrintRecordsNumber()
 {
     std::string line;

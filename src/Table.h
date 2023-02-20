@@ -27,6 +27,7 @@ public:
     virtual void UpdateRecord() = 0;
 
     virtual void PrintList() = 0;
+    virtual void PrintRecord() = 0;
     inline virtual void PrintRecordsNumber() = 0;
 
 private:
